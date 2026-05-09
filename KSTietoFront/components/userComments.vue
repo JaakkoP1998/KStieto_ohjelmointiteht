@@ -3,13 +3,20 @@ import { ref, onMounted } from 'vue'
 // Axios on jo entuudestaan tuttu, joten käytetään sitä.
 import axios from 'axios'
 
-// Kommenttien URL backendissä.
-const baseUrl = 'http://localhost/KStieto/publicComments.php'
+// Ei julkisien kommenttien URL backendissä.
+const baseUrl = 'http://localhost/KStieto/privateComments.php'
 const comments = ref([])
+
+// Kovakoodataan tämä väliaikaisesti testaamista varten.
 
 const fetchComments = async () => {
     try {
-        const response = await axios.get(baseUrl)
+        const response = await axios.post(
+            baseUrl,
+            {
+                userId: 1
+            }
+        )
 
         comments.value = response.data
     } catch (error) {
@@ -24,9 +31,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="publicComments">
-        <h2>Comments</h2>
-
+    <div class="privateComments">
+        <h2>My Comments</h2>
         <ul>
             <li
                 v-for="comment in comments"
