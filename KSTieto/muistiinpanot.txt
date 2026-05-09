@@ -1,0 +1,16 @@
+Tehtävänannossa on käytetty XAMPP-pakettia.
+
+SQL:
+
+CREATE TABLE Users (
+  UserName varchar(255) PRIMARY KEY,
+  PassWord varchar(255) NOT NULL,
+  FOREIGN KEY (Content)
+);
+
+
+CREATE TABLE Comments (
+  CommentID int PRIMARY KEY,
+  Content varchar(255) NOT NULL,
+  FOREIGN KEY (UserName)
+);
