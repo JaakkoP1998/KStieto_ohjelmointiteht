@@ -1,18 +1,21 @@
 <?php
-  include("database.php");
+  header("Access-Control-Allow-Origin: *");
+  header("Content-Type: application/json");
 
-  $sql = "SELECT * FROM users";
+  include("database.php");
+  // Väliaikaisesti testaamista varten haetaan kaikki kommentit
+  $sql = "SELECT id, content FROM comment";
   $result = mysqli_query($conn, $sql);
 
-  // Tarkistetaan tuliko kyselystä mitään
+  $comments = [];
+
   if (mysqli_num_rows($result) > 0) {
-    while($row = mysqli_fetch_assoc($result)){
-      echo $row["id"] . "<br>";
-      echo $row["username"] . "<br>";
-    };  
-  } else {
-    echo"No results found";
+      while ($row = mysqli_fetch_assoc($result)) {
+          $comments[] = $row;
+      }
   }
+
+  echo json_encode($comments);
 
   mysqli_close($conn);
 ?>
