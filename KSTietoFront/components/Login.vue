@@ -26,8 +26,7 @@
         } catch (error) {
             console.error('Error fetching user:', error)
         }
-
-        console.log(user)
+        //console.log(user)
     }
 </script>
 
@@ -47,7 +46,7 @@
                 <input type="password" v-model="password"/>
             </label>
         </div>
-        <button type="submit"> Login </button>
+        <button type="submit"> Kirjaudu sisään </button>
     </form>
   </div>
   <h3 v-if="username"> {{username}} on kirjautunut sisään. </h3>

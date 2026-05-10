@@ -1,8 +1,34 @@
 <script setup>
+    import axios from 'axios'
     import { ref, onMounted } from 'vue'
+    const baseUrl = 'http://localhost/KStieto/newUser.php'
     const username = ref("")
     const password = ref("")
+    const user = ref()
+    
+    const submit = async () => {
+        try {
+            const response = await axios.post(
+                baseUrl,
+                {
+                    username: username.value,
+                    password: password.value
+                }
+            )
+            
+            // Ilmoitetaan jos käyttäjän luomisessa on ongelma.
+            if (response.data.error) {
+                alert(response.data.error)
+                return
+            }
 
+            user.value = response.data
+        } catch (error) {
+            console.error('Error fetching user:', error)
+        }
+
+        console.log(user)
+    }
 
 </script>
 
@@ -22,7 +48,7 @@
                 <input type="password" v-model="password"/>
             </label>
         </div>
-        <button type="submit"> Login </button>
+        <button type="submit"> Luo käyttäjä </button>
     </form>
   </div>
 </template>

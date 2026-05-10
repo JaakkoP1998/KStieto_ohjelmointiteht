@@ -1,11 +1,11 @@
-Tehtävänannossa on käytetty XAMPP-pakettia.
-Front-end on toteutettu nodella.
+README.md selitykset: 
+- Tehtävänannossa on käytetty XAMPP-pakettia PHP:n ja tietokannan luonnissa.
+- Front-end on toteutettu nodella.
 Muita työkaluja käytetty: 
-https://vuejs.org/guide/scaling-up/routing eri formien välillä vaihtelussa.
-ChatGPT CORS-asetuksien säädössä php-puolella.
+- https://vuejs.org/guide/scaling-up/routing eri formien välillä vaihtelussa.
+- ChatGPT CORS-asetuksien säädössä php-puolella.
 
-SQL:
-
+SQL-suunnitelma:
 CREATE TABLE Users (
   UserName varchar(255) PRIMARY KEY,
   PassWord varchar(255) NOT NULL,
@@ -18,3 +18,6 @@ CREATE TABLE Comments (
   Content varchar(255) NOT NULL,
   FOREIGN KEY (UserName)
 );
+
+
+Jos localstoragesta löytyy käyttäjä -> Näytä kommenttilomake ja käyttäjän kommentit.
