@@ -1,5 +1,4 @@
 <?php
-    
     // Hyväksytään kutsut vue frontendistä:
     header("Access-Control-Allow-Origin: http://localhost:5173");
 
@@ -14,40 +13,36 @@
     // Haetaan POST:in JSON-tiedot
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Haetaan käyttäjän id.
-    $userId = $data["userId"] ?? null;
+    // Haetaan käyttäjänimi
+    $username = $data["username"] ?? null;
 
-    // Tarkistetaan onko idtä olemassa.
-    if (!$userId) {
+    // Tarkistetaan onko käyttäjää olemassa.
+    if (!$username) {
         echo json_encode([
-            "error" => "Missing userId"
+            "error" => "Wrong username or user doesn't exist."
         ]);
         exit;
     }
 
     // SQL-lause jolla haetaan käyttäjän kommentit.
-    $sql = "SELECT id, content FROM comment WHERE userid = ?";
+    $sql = "SELECT id, username FROM users WHERE username = ?";
 
     // Sanitoidaan kysely SQL-injektioiden varalta.
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $userId);
+    $stmt->bind_param("s", $username);
 
     $stmt->execute();
 
     $result = $stmt->get_result();
 
+    $user = NULL;
 
-    $comments = [];
-
-    // Laitetaan kaikki löydetyt kommentit taulukkoon.
     if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $comments[] = $row;
-        }
+        $row = mysqli_fetch_assoc($result);
+        $user = $row;
     }
 
-    // Lähetetään kommentit JSON-muodossa.
-    echo json_encode($comments);
+    echo json_encode($user);
 
     $stmt->close();
     mysqli_close($conn);

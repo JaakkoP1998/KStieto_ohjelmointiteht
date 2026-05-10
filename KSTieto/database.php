@@ -1,5 +1,6 @@
 <?php
-
+    // Tiedosto tietokantaan yhdistämiseen
+    
     $db_server = "localhost";
     $db_user = "root";
     $db_password = "";
@@ -8,18 +9,18 @@
     $conn = "";
 
     try {
-        $conn = mysqli_connect($db_server,
-                                $db_user, 
-                                $db_password, 
-                                $db_name);
+    $conn = mysqli_connect($db_server,
+                            $db_user, 
+                            $db_password, 
+                            $db_name);
     } catch (mysqli_sql_exception){
-        echo"Could not connect to database.";
+    echo"Could not connect to database.";
     }
-    
+
 
     /*
     if ($conn){
-        echo"You are connected!";
+    echo"You are connected!";
     } 
     */
 ?>

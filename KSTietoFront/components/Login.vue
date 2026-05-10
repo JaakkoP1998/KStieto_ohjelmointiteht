@@ -1,7 +1,26 @@
 <script setup>
-  const submit = () => {
+  import axios from 'axios'
+  import { ref, onMounted } from 'vue'
+
+  const baseUrl = 'http://localhost/KStieto/login.php'
+  const user = ref([])
+  
+  const submit = async () => {
     
-    console.log("Logged In!")
+    try {
+        const response = await axios.post(
+            baseUrl,
+            {
+                username: "Roope"
+            }
+        )
+
+        user.value = response.data
+    } catch (error) {
+        console.error('Error fetching user:', error)
+    }
+
+    console.log(user)
   }
 </script>
 

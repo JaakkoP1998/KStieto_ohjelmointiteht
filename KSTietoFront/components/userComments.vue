@@ -3,11 +3,11 @@ import { ref, onMounted } from 'vue'
 // Axios on jo entuudestaan tuttu, joten käytetään sitä.
 import axios from 'axios'
 
-// Ei julkisien kommenttien URL backendissä.
+// Käyttäjän omien kommentien URL.
 const baseUrl = 'http://localhost/KStieto/privateComments.php'
 const comments = ref([])
 
-// Kovakoodataan tämä väliaikaisesti testaamista varten.
+// Kovakoodataan käyttäjä väliaikaisesti testaamista varten.
 
 const fetchComments = async () => {
     try {

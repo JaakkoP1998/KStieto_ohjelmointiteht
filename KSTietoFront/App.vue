@@ -6,8 +6,8 @@ import userComments from './components/userComments.vue';
 
 <template>
   <div class="main">
-    <Login></Login>
-    <userComments/>
-    <Comments/>
+    <Login />
+    <userComments />
+    <Comments />
   </div>
 </template>
