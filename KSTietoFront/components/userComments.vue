@@ -36,8 +36,7 @@ onMounted(() => {
         <ul>
             <li
                 v-for="comment in comments"
-                :key="comment.id"
-            >
+                :key="comment.id" >
                 {{ comment.content }}
             </li>
         </ul>
