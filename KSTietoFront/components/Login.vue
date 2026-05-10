@@ -33,7 +33,7 @@
 
 <template>
   <div class="loginForm">
-    <h2>Login</h2>
+    <h2> Kirjaudu sisään </h2>
     <form @submit.prevent="submit">
       <div>
             <label> 
