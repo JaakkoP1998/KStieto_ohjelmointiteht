@@ -23,11 +23,22 @@
             }
 
             user.value = response.data
+            // Tallennetaan käyttäjä selaimen lokaaliin muistiin.
+            localStorage.setItem('user', JSON.stringify(user.value))
+
+            console.log(localStorage.getItem('user'))
         } catch (error) {
             console.error('Error fetching user:', error)
         }
-        //console.log(user)
     }
+
+    // Kirjaudutaan ulos poistamalla käyttäjä lokaalista muistista
+    // ja ladataan sivu uudelleen.
+    const logOut = () => {
+        localStorage.removeItem('user')
+        location.reload();
+    }
+
 </script>
 
 <template>
@@ -49,5 +60,8 @@
         <button type="submit"> Kirjaudu sisään </button>
     </form>
   </div>
-  <h3 v-if="username"> {{username}} on kirjautunut sisään. </h3>
+  <div v-if="user"> 
+    <h3 > {{ user.username }} on kirjautunut sisään. </h3>
+    <button @click="logOut"> Kirjaudu ulos </button>
+  </div>
 </template>
