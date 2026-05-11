@@ -1,8 +1,9 @@
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted, onUnmounted } from 'vue'
 
   import Login from './components/Login.vue';
   import NewUser from './components/NewUser.vue';
+  import CommentForm from './components/CommentForm.vue';
   import Comments from './components/Comments.vue';
   import userComments from './components/userComments.vue';
 
@@ -23,16 +24,41 @@
     return routes[currentPath.value.slice(1) || '/'] || Login
   })
 
+
+  // Katsotaan löytyykö käyttäjää localStoragesta.
+  const user = ref()
+  const checkUser = () => {
+    user.value = localStorage.getItem('user')
+  } 
+
+  onMounted(() => {
+    // Tarkistetaan sivun ladattaessa 
+    checkUser()
+
+    // Kuunnellaan jos jokin komponetti tekee muutoksia localStorageen.
+    window.addEventListener('storage', checkUser)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('storage', checkUser)
+  })
+
 </script>
 
 <template>
   <div class="main">
+
     <div>
       <a href="#/"> Kirjaudu sisään </a> |
       <a href="#/uusi"> Luo uusi käyttäjä </a> |
       <component :is="currentView" />
     </div>
-    <userComments />
+
+    <div v-if="user">
+      <CommentForm />
+      <userComments />
+    </div>
+
     <Comments />
   </div>
 </template>

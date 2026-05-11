@@ -25,7 +25,7 @@ onMounted(() => {
 
 <template>
     <div class="publicComments">
-        <h2>Comments</h2>
+        <h2> Julkiset kommentit </h2>
 
         <ul>
             <li

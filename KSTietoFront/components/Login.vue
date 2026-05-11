@@ -25,7 +25,8 @@
             user.value = response.data
             // Tallennetaan käyttäjä selaimen lokaaliin muistiin.
             localStorage.setItem('user', JSON.stringify(user.value))
-
+            // Tässä pitäisi myös kustua main APP checkUser()-funktiota.
+            //checkUser()
             console.log(localStorage.getItem('user'))
         } catch (error) {
             console.error('Error fetching user:', error)

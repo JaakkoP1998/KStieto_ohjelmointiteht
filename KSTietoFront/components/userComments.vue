@@ -8,7 +8,6 @@ const baseUrl = 'http://localhost/KStieto/privateComments.php'
 const comments = ref([])
 
 // Kovakoodataan käyttäjä väliaikaisesti testaamista varten.
-
 const fetchComments = async () => {
     try {
         const response = await axios.post(
@@ -32,7 +31,7 @@ onMounted(() => {
 
 <template>
     <div class="privateComments">
-        <h2>My Comments</h2>
+        <h2> Omat kommentit </h2>
         <ul>
             <li
                 v-for="comment in comments"
