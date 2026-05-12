@@ -28,7 +28,15 @@
   // Katsotaan löytyykö käyttäjää localStoragesta.
   const user = ref()
   const checkUser = () => {
-    user.value = localStorage.getItem('user')
+    // Localstorage tallentaa vain string-muodossa
+    const storedUser = localStorage.getItem('user')
+
+    // Jos käyttäjä löytyy asetetaan se ref:iin, muuten pidetään tyhjänä.
+    if (storedUser) {
+      user.value = JSON.parse(storedUser)
+    } else {
+      user.value = null
+    }
   } 
 
   onMounted(() => {
@@ -43,6 +51,13 @@
     window.removeEventListener('storage', checkUser)
   })
 
+  // Kirjaudutaan ulos poistamalla käyttäjä lokaalista muistista
+  // ja ladataan sivu uudelleen.
+  const logOut = () => {
+    localStorage.removeItem('user')
+    location.reload();
+  }
+
 </script>
 
 <template>
@@ -54,7 +69,9 @@
       <component :is="currentView" />
     </div>
 
-    <div v-if="user">
+    <div v-if="user"> 
+      <h3 > {{ user.username }} on kirjautunut sisään. </h3>
+      <button @click="logOut"> Kirjaudu ulos </button>
       <CommentForm />
       <userComments />
     </div>

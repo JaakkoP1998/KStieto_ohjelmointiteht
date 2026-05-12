@@ -33,13 +33,6 @@
         }
     }
 
-    // Kirjaudutaan ulos poistamalla käyttäjä lokaalista muistista
-    // ja ladataan sivu uudelleen.
-    const logOut = () => {
-        localStorage.removeItem('user')
-        location.reload();
-    }
-
 </script>
 
 <template>
@@ -60,9 +53,5 @@
         </div>
         <button type="submit"> Kirjaudu sisään </button>
     </form>
-  </div>
-  <div v-if="user"> 
-    <h3 > {{ user.username }} on kirjautunut sisään. </h3>
-    <button @click="logOut"> Kirjaudu ulos </button>
   </div>
 </template>

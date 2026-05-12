@@ -20,4 +20,10 @@ CREATE TABLE Comments (
 );
 
 
-Jos localstoragesta löytyy käyttäjä -> Näytä kommenttilomake ja käyttäjän kommentit.
+Ongelmia mitä vielä korjata:
+- Kirjautumislomakkeen ehdollinen renderöinti jos käyttä lyötyy
+- Sisäänkirjautumisessa salasanan tarkistus
+- Salasanan hashaus uutta käyttäjää luodessa
+- Kommenttien julkaisu
+- Käyttäjän omien kommenttien hakeminen oikealla id:llä
+- Admin -osio
