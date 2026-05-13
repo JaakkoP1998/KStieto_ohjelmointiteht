@@ -12,7 +12,8 @@
             const response = await axios.post(
                 baseUrl,
                 {
-                    username: username.value
+                    username: username.value,
+                    password: password.value
                 }
             )
             

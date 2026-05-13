@@ -15,17 +15,16 @@
 
     // Haetaan käyttäjänimi
     $username = $data["username"] ?? null;
+    $password = $data["password"] ?? null;
 
-    // Tarkistetaan onko käyttäjää olemassa.
-    if (!$username) {
-        echo json_encode([
-            "error" => "Wrong username or user doesn't exist."
-        ]);
+    // Tarkistetaan saatiinko käyttäjä ja salasana Jsonista.
+    if (!$username || !$password) {
+        echo json_encode(["error" => "Käyttäjänimi tai salasana puuttuu."]);
         exit;
     }
 
     // SQL-lause jolla haetaan käyttäjän kommentit.
-    $sql = "SELECT id, username FROM users WHERE username = ?";
+    $sql = "SELECT id, username, password FROM users WHERE username = ?";
 
     // Sanitoidaan kysely SQL-injektioiden varalta.
     $stmt = $conn->prepare($sql);
@@ -35,14 +34,23 @@
 
     $result = $stmt->get_result();
 
-    $user = NULL;
-
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $user = $row;
+    if (mysqli_num_rows($result) === 0) {
+        echo json_encode(["error" => "Käyttäjänimi tai salasana väärin"]);
+        exit;
     }
 
-    echo json_encode($user);
+    $user = $result->fetch_assoc();
+
+    // Verrataan annettua salasanaa hashattuun salasanaan
+    if (password_verify($password, $user["password"])) {
+        echo json_encode([
+            "id" => $user["id"],
+            "username" => $user["username"]
+        ]);
+
+    } else {
+        echo json_encode(["error" => "Käyttäjänimi tai salasana väärin"]);
+    }
 
     $stmt->close();
     mysqli_close($conn);

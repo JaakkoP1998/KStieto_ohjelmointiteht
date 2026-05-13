@@ -25,5 +25,6 @@ Ongelmia mitä vielä korjata:
 - Sisäänkirjautumisessa salasanan tarkistus
 - Salasanan hashaus uutta käyttäjää luodessa
 - Kommenttien julkaisu
+- Kommenttien päivitys
 - Käyttäjän omien kommenttien hakeminen oikealla id:llä
 - Admin -osio

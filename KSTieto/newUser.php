@@ -17,11 +17,14 @@
     $username = $data["username"] ?? null;
     $password = $data["password"] ?? null;
 
+    // Hashataan salasana
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
     $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
 
-    // Sanitoidaan sql-kysely. HUOM salasanojen hashauksen toteutus!!
+    // Sanitoidaan sql-kysely.
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("ss", $username, $hash);
 
     $stmt->execute();
 
