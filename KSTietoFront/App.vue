@@ -5,11 +5,9 @@ import Login from './components/Login.vue';
 import NewUser from './components/NewUser.vue';
 import CommentForm from './components/CommentForm.vue';
 import Comments from './components/Comments.vue';
-import userComments from './components/userComments.vue';
 
 const user = ref()
 const commentsRef = ref(null)
-const userCommentsRef = ref(null)
 
 // Lomakkeiden vaihtumisten välillä on otettu mallia
 // https://vuejs.org/guide/scaling-up/routing esimerkistä.
@@ -64,7 +62,6 @@ const logOut = () => {
 // Kommenttien päivitys käyttöliittymässä, kun uusi kommentti lisätään
 const refreshComments = () => {
     commentsRef.value?.fetchComments()
-    userCommentsRef.value?.fetchUserComments()
 }
 
 </script>
@@ -82,8 +79,7 @@ const refreshComments = () => {
       <h3 > {{ user.username }} on kirjautunut sisään. </h3>
       <button @click="logOut"> Kirjaudu ulos </button>
       <CommentForm @comment-added="refreshComments"/>
-      <userComments :userId="user.id" ref="userCommentsRef"/>
-      <Comments ref="commentsRef"/>
+      <Comments :userId="user.id" ref="commentsRef" />
     </div>
     
   </div>

@@ -1,19 +1,39 @@
 <script setup>
 import { ref, onMounted, defineExpose } from 'vue'
-// Axios on jo entuudestaan tuttu, joten käytetään sitä.
 import axios from 'axios'
 
-// Kommenttien URL backendissä.
-const baseUrl = 'http://localhost/KStieto/publicComments.php'
-const comments = ref([])
+const publicComments = ref([])
+const privateComments = ref([])
 
+// Käyttäjän id on annettu propsina App-komponentissa
+const props = defineProps({
+  userId: {
+    type: [String, Number], 
+    required: true
+  }
+})
+
+// Haetaan julkiset kommentit
 const fetchComments = async () => {
     try {
-        const response = await axios.get(baseUrl)
+        const response = await axios.get('http://localhost/KStieto/publicComments.php')
 
-        comments.value = response.data
+        publicComments.value = response.data
     } catch (error) {
-        console.error('Error fetching comments:', error)
+        console.error('Error fetching public comments:', error)
+    }
+
+    try {
+        const response = await axios.post(
+            'http://localhost/KStieto/privateComments.php',
+            {
+                userId: props.userId
+            }
+        )
+
+        privateComments.value = response.data
+    } catch (error) {
+        console.error('Error fetching private comments:', error)
     }
 }
 
@@ -29,14 +49,21 @@ onMounted(() => {
 </script>
 
 <template>
+    <div class="privateComments">
+        <h2> Omat kommentit </h2>
+        <ul>
+            <li
+                v-for="comment in privateComments"
+                :key="comment.id" >
+                {{ comment.content }}
+            </li>
+        </ul>
+    </div>
     <div class="publicComments">
         <h2> Julkiset kommentit </h2>
 
         <ul>
-            <li
-                v-for="comment in comments"
-                :key="comment.id"
-            >
+            <li v-for="comment in publicComments" :key="comment.id">
                 {{ comment.content }}
             </li>
         </ul>
