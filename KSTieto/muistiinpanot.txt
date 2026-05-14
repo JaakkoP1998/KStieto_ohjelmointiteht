@@ -2,29 +2,13 @@ README.md selitykset:
 - Tehtävänannossa on käytetty XAMPP-pakettia PHP:n ja tietokannan luonnissa.
 - Front-end on toteutettu nodella.
 Muita työkaluja käytetty: 
+- PHP tutoriaalit käytiin läpi Bro Code -youtubekanavan tutoriaalit.
+- Vue:en tutustuttiin vuen omalla guidella.
 - https://vuejs.org/guide/scaling-up/routing eri formien välillä vaihtelussa.
 - ChatGPT CORS-asetuksien säädössä php-puolella.
-
-SQL-suunnitelma:
-CREATE TABLE Users (
-  UserName varchar(255) PRIMARY KEY,
-  PassWord varchar(255) NOT NULL,
-  FOREIGN KEY (Content)
-);
-
-
-CREATE TABLE Comments (
-  CommentID int PRIMARY KEY,
-  Content varchar(255) NOT NULL,
-  FOREIGN KEY (UserName)
-);
-
+- ChatGPTtä on myös käytetty kommenttien päivityksessä käyttöliittymässä.
 
 Ongelmia mitä vielä korjata:
-- Kirjautumislomakkeen ehdollinen renderöinti jos käyttä lyötyy
-- Sisäänkirjautumisessa salasanan tarkistus
-- Salasanan hashaus uutta käyttäjää luodessa
+- Kirjautumislomakkeen ehdollinen renderöinti jos käyttäjä löytyy
 - Kommenttien julkaisu
-- Kommenttien päivitys
-- Käyttäjän omien kommenttien hakeminen oikealla id:llä
 - Admin -osio

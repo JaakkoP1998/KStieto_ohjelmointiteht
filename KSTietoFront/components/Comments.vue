@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineExpose } from 'vue'
 // Axios on jo entuudestaan tuttu, joten käytetään sitä.
 import axios from 'axios'
 
@@ -16,6 +16,11 @@ const fetchComments = async () => {
         console.error('Error fetching comments:', error)
     }
 }
+
+// Annetaan parent-komponentin päästä käsiksi fetchComments-funktioon.
+defineExpose({
+    fetchComments
+})
 
 onMounted(() => {
     fetchComments()

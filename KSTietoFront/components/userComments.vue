@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineExpose } from 'vue'
 // Axios on jo entuudestaan tuttu, joten käytetään sitä.
 import axios from 'axios'
 
@@ -7,13 +7,23 @@ import axios from 'axios'
 const baseUrl = 'http://localhost/KStieto/privateComments.php'
 const comments = ref([])
 
+// Käyttäjän id on annettu propsina App-komponentissa
+const props = defineProps({
+  userId: {
+    type: [String, Number], 
+    required: true
+  }
+})
+
+console.log(props.userId)
+
 // Kovakoodataan käyttäjä väliaikaisesti testaamista varten.
-const fetchComments = async () => {
+const fetchUserComments = async () => {
     try {
         const response = await axios.post(
             baseUrl,
             {
-                userId: 1
+                userId: props.userId
             }
         )
 
@@ -23,8 +33,13 @@ const fetchComments = async () => {
     }
 }
 
+// Annetaan parent-komponentin päästä käsiksi fetchComments-funktioon.
+defineExpose({
+    fetchUserComments
+})
+
 onMounted(() => {
-    fetchComments()
+    fetchUserComments()
 })
 
 </script>

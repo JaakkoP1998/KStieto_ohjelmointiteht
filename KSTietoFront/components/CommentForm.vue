@@ -1,42 +1,46 @@
 <script setup>
-        import axios from 'axios'
-    import { ref, onMounted } from 'vue'
-    const baseUrl = 'http://localhost/KStieto/newComment.php'
-    const content = ref("")
-    const publicComment = ref(0)
-    
-    const submit = async () => {
-        try {
+import axios from 'axios'
+import { ref } from 'vue'
+const baseUrl = 'http://localhost/KStieto/newComment.php'
+const content = ref("")
+const publicComment = ref(0)
 
-            // Haetaan kirjautuneen käyttäjän id.
-            const userid = JSON.parse(localStorage.getItem('user')).id
+const emit = defineEmits(['comment-added'])
 
-            const response = await axios.post(
-                baseUrl,
-                {
-                    content: content.value,
-                    userid: userid,
-                    public: publicComment.value
-                }
-            )
-            
-            // Ilmoitetaan jos kommentin lisäämisessä on ongelma.
-            if (response.data.error) {
-                alert(response.data.error)
-                return
+const submit = async () => {
+    try {
+
+        // Haetaan kirjautuneen käyttäjän id.
+        const userid = JSON.parse(localStorage.getItem('user')).id
+
+        const response = await axios.post(
+            baseUrl,
+            {
+                content: content.value,
+                userid: userid,
+                public: publicComment.value
             }
-
-        } catch (error) {
-            console.error('Error adding comment:', error)
+        )
+        
+        // Ilmoitetaan jos kommentin lisäämisessä on ongelma.
+        if (response.data.error) {
+            alert(response.data.error)
+            return
         }
 
+        // Tyhjennetään lomakkeen kentät
+        content.value = ""
+        publicComment.value = 0
+
+        // Kommenttien päivitystä varten ilmoitetaan App-komponentille,
+        // että kommentti on lisätty.
+        emit('comment-added')
+        
+    } catch (error) {
+        console.error('Error adding comment:', error)
     }
 
-/*     const testingCheck = () => {
-        const userid = JSON.parse(localStorage.getItem('user')).id
-        console.log(userid)
-    } */
-
+}
 </script>
 
 <template>
