@@ -1,4 +1,5 @@
 <script setup>
+// TODO: tässä komponentissa hoidetaan KAIKKIEN kommenttien haku
 import { ref, onMounted, defineExpose } from 'vue'
 import axios from 'axios'
 
@@ -46,6 +47,13 @@ onMounted(() => {
     fetchComments()
 })
 
+// Functio joka hoitaa kommenttien julkisuuden muuttumisen
+// Nyt vielä vain testaa ominaisuutta, ei kutsu vielä backendiä.
+const publishComment = (id) => {
+    console.log(id)
+}
+
+
 </script>
 
 <template>
@@ -56,7 +64,8 @@ onMounted(() => {
                 v-for="comment in privateComments"
                 :key="comment.id" >
                 {{ comment.content }}
-            </li>
+                <button @click="publishComment(comment.id)"> Julkaise </button>
+            </li> 
         </ul>
     </div>
     <div class="publicComments">

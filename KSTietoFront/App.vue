@@ -69,13 +69,12 @@ const refreshComments = () => {
 <template>
   <div class="main">
 
-    <div>
+    <div v-if="!user" class="loginForms">
       <a href="#/"> Kirjaudu sisään </a> |
       <a href="#/uusi"> Luo uusi käyttäjä </a> |
       <component :is="currentView" />
     </div>
-
-    <div v-if="user"> 
+    <div v-else> 
       <h3 > {{ user.username }} on kirjautunut sisään. </h3>
       <button @click="logOut"> Kirjaudu ulos </button>
       <CommentForm @comment-added="refreshComments"/>

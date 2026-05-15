@@ -9,6 +9,5 @@ Muita työkaluja käytetty:
 - ChatGPTtä on myös käytetty kommenttien päivityksessä käyttöliittymässä.
 
 Ongelmia mitä vielä korjata:
-- Kirjautumislomakkeen ehdollinen renderöinti jos käyttäjä löytyy
 - Kommenttien julkaisu
 - Admin -osio
