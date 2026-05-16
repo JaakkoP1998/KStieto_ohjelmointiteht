@@ -5,6 +5,7 @@ import Login from './components/Login.vue';
 import NewUser from './components/NewUser.vue';
 import CommentForm from './components/CommentForm.vue';
 import Comments from './components/Comments.vue';
+import Admin from './components/Admin.vue';
 
 const user = ref()
 const commentsRef = ref(null)
@@ -75,11 +76,12 @@ const refreshComments = () => {
       <component :is="currentView" />
     </div>
     <div v-else> 
-      <h3 > {{ user.username }} on kirjautunut sisään. </h3>
+      <h3> {{ user.username }} on kirjautunut sisään. </h3>
       <button @click="logOut"> Kirjaudu ulos </button>
-      <CommentForm @comment-added="refreshComments"/>
+      <CommentForm @comment-added="refreshComments" />
       <Comments :userId="user.id" ref="commentsRef" />
     </div>
-    
+    <Admin />
+
   </div>
 </template>
