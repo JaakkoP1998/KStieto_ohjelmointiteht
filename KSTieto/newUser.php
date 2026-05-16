@@ -1,4 +1,6 @@
 <?php
+    // Tämä tiedosto hoitaa uuden käyttäjän lisäämisen tietokantaan.
+
     // Hyväksytään kutsut vue frontendistä:
     header("Access-Control-Allow-Origin: http://localhost:5173");
 
@@ -28,7 +30,7 @@
 
     $stmt->execute();
 
-    echo "Uusi käyttäjä luotu!";
+    echo json_encode(["Uusi käyttäjä luotu!"]);
 
     $stmt->close();
     mysqli_close($conn);

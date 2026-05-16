@@ -1,5 +1,4 @@
 <script setup>
-// TODO: tässä komponentissa hoidetaan KAIKKIEN kommenttien haku
 import { ref, onMounted, defineExpose } from 'vue'
 import axios from 'axios'
 
@@ -47,16 +46,32 @@ onMounted(() => {
     fetchComments()
 })
 
-// Functio joka hoitaa kommenttien julkisuuden muuttumisen
-// Nyt vielä vain testaa ominaisuutta, ei kutsu vielä backendiä.
-const publishComment = (id) => {
-    console.log(id)
+// Functio joka hoitaa kommenttien julkisuuden muuttumisen.
+const publishComment = async (id) => {
+    try {
+        const response = await axios.post(
+            'http://localhost/KStieto/updatePublicity.php',
+            {
+                commentId: id
+            }
+        )
+
+        alert(response.data)
+        // Päivitetään kommentit
+        fetchComments()
+
+    } catch (error) {
+        console.error('Error fetching public comments:', error)
+    }
 }
 
 
 </script>
 
 <template>
+    <!-- Käyttäjän omat henkilökohtaiset kommentit. 
+     Kommenteissa on kiinni painike, jolla komentit voi julkaista, jos kommentti ei 
+     ole jo julkinen. -->
     <div class="privateComments">
         <h2> Omat kommentit </h2>
         <ul>
@@ -64,13 +79,16 @@ const publishComment = (id) => {
                 v-for="comment in privateComments"
                 :key="comment.id" >
                 {{ comment.content }}
-                <button @click="publishComment(comment.id)"> Julkaise </button>
+                <button 
+                    @click="publishComment(comment.id)"
+                    v-if="comment.public == 0">
+                    Julkaise 
+                </button>
             </li> 
         </ul>
     </div>
     <div class="publicComments">
         <h2> Julkiset kommentit </h2>
-
         <ul>
             <li v-for="comment in publicComments" :key="comment.id">
                 {{ comment.content }}

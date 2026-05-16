@@ -1,12 +1,10 @@
 <?php
-    // Tämä tiedosto hoitaa uuden kommentin lisäämisen mySQL-tietokantaan.
+    // Tämä tiedosto hoitaa kommenttien julkisuuden päivittämisen.
 
     // Hyväksytään kutsut vue frontendistä:
     header("Access-Control-Allow-Origin: http://localhost:5173");
-
     // Hyväksytään POST
     header("Access-Control-Allow-Methods: POST, OPTIONS");
-
     header("Access-Control-Allow-Headers: Content-Type");
     header("Content-Type: application/json");
 
@@ -15,27 +13,19 @@
     // Haetaan POST:in JSON-tiedot.
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Haetaan kommentin tiedot
-    $content = $data["content"] ?? null;
-    $userid = $data["userid"] ?? null;
-    $public = $data["public"] ?? null;
+    // Haetaan kommentin id.
+    $commentId = $data["commentId"] ?? null;
 
-    if (!$content) {
-        echo json_encode([
-            "error" => "Kommentti ei saa olla tyhjä!"
-        ]);
-        exit;
-    }
 
-    $sql = "INSERT INTO comment (content, userid, public) VALUES (?, ?, ?)";
+    $sql = "UPDATE comment SET public=1 WHERE id=?";
 
     // Sanitoidaan sql-kysely. 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $content, $userid, $public);
+    $stmt->bind_param("i", $commentId);
 
     $stmt->execute();
 
-    echo "Uusi kommentti lisätty!";
+    echo json_encode(["Kommentti on julkaistu!"]);
 
     $stmt->close();
     mysqli_close($conn);

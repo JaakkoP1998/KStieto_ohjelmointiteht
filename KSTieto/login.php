@@ -1,4 +1,6 @@
 <?php
+    // Tässä tiedostossa hoidetaan käyttäjän sisälle kirjautuminen.
+
     // Hyväksytään kutsut vue frontendistä:
     header("Access-Control-Allow-Origin: http://localhost:5173");
 

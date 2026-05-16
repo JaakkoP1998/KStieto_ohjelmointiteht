@@ -23,11 +23,17 @@ const submit = async () => {
         }
 
         user.value = response.data
+
+        // Ilmoitetaan käyttäjän luomisesta ja tyhjennetään lomake.
+        alert(response.data)
+        username.value = ""
+        password.value = ""
+
     } catch (error) {
         console.error('Error fetching user:', error)
     }
 
-    console.log(user)
+    //console.log(user)
 }
 
 </script>

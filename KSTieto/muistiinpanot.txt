@@ -9,5 +9,5 @@ Muita työkaluja käytetty:
 - ChatGPTtä on myös käytetty kommenttien päivityksessä käyttöliittymässä.
 
 Ongelmia mitä vielä korjata:
-- Kommenttien julkaisu
 - Admin -osio
+- READ.me -päivitys

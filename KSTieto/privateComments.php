@@ -26,7 +26,7 @@
     }
 
     // SQL-lause jolla haetaan käyttäjän kommentit.
-    $sql = "SELECT id, content FROM comment WHERE userid = ?";
+    $sql = "SELECT id, content, public FROM comment WHERE userid = ?";
 
     // Sanitoidaan kysely SQL-injektioiden varalta.
     $stmt = $conn->prepare($sql);
