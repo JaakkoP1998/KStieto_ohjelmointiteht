@@ -61,7 +61,7 @@ const publishComment = async (id) => {
         fetchComments()
 
     } catch (error) {
-        console.error('Error fetching public comments:', error)
+        console.error('Error publishing comment:', error)
     }
 }
 

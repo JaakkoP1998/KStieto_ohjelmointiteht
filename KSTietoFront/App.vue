@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import axios from 'axios';
 
 import Login from './components/Login.vue';
 import NewUser from './components/NewUser.vue';
@@ -9,6 +10,9 @@ import Admin from './components/Admin.vue';
 
 const user = ref()
 const commentsRef = ref(null)
+const showAdmin = ref(false)
+const showPasswordInput = ref(false)
+const adminPassword = ref('')
 
 // Lomakkeiden vaihtumisten välillä on otettu mallia
 // https://vuejs.org/guide/scaling-up/routing esimerkistä.
@@ -65,11 +69,41 @@ const refreshComments = () => {
     commentsRef.value?.fetchComments()
 }
 
+// Tarkistetaan että saatiin oikea salasana
+const checkAdminPassword = async () => {
+  try {
+    const response = await axios.post(
+        'http://localhost/KStieto/adminLogIn.php',
+        {
+            password: adminPassword.value
+        }
+    )
+    
+    // Ilmoitetaan jos käyttäjän hakemisessa oli ongelmia.
+    if (response.data.error) {
+        alert(response.data.error)
+        return
+    }
+
+    if (response.data.success){
+      showAdmin.value = true
+    }
+
+  } catch (error) {
+      console.error('Error fetching admin:', error)
+  }
+}
+
+const logOutAdmin = () => {
+  adminPassword.value = ""
+  showAdmin.value = false
+}
+
 </script>
 
 <template>
   <div class="main">
-
+    
     <div v-if="!user" class="loginForms">
       <a href="#/"> Kirjaudu sisään </a> |
       <a href="#/uusi"> Luo uusi käyttäjä </a> |
@@ -81,7 +115,31 @@ const refreshComments = () => {
       <CommentForm @comment-added="refreshComments" />
       <Comments :userId="user.id" ref="commentsRef" />
     </div>
-    <Admin />
+    
+    <div class="adminMain">
+
+      <div v-if="!showAdmin">
+        <button @click="showPasswordInput = !showPasswordInput">
+          Näytä admin-paneeli
+        </button>
+
+        <div v-if="showPasswordInput">
+          <input
+            v-model="adminPassword"
+            type="password"
+            placeholder="Anna salasana"
+          />
+
+          <button @click="checkAdminPassword">
+            Kirjaudu adminiksi
+          </button>
+        </div>
+      </div>
+      <div v-if="showAdmin" >
+        <button @click="logOutAdmin"> Kirjaudu pois Administa </button>
+        <Admin />
+      </div>
+    </div>
 
   </div>
 </template>
